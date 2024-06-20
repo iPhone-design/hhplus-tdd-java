@@ -13,6 +13,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -89,5 +94,31 @@ class PointServiceImplTest {
 
         // then
         assertThat(userPoint.point()).isEqualTo(amount - useAmount);                      // 포인트 값 체크
+    }
+
+    @Test
+    void concurrency() throws Exception {
+        // given
+        userPointRepositoryImpl.updatePoint(1, 1000);
+        System.out.println("포인트 : " + userPointRepositoryImpl.selectPoint(1).point());
+
+        // when
+        CompletableFuture.allOf(
+            CompletableFuture.runAsync(() -> {
+                userPointRepositoryImpl.updatePoint(1, 300);
+            }),
+            CompletableFuture.runAsync(() -> {
+                userPointRepositoryImpl.updatePoint(1, 200);
+                System.out.println("포인트 : " + userPointRepositoryImpl.selectPoint(1).point());
+            }),
+            CompletableFuture.runAsync(() -> {
+                userPointRepositoryImpl.updatePoint(1, 500);
+                System.out.println("포인트 : " + userPointRepositoryImpl.selectPoint(1).point());
+            })
+        ).join();  // 제일 오래 끝나는거 끝날떄까지 기다려줌. = 내가 비동기/병렬로 실행한 함수가 전부 끝남을 보장.
+
+        // then
+        UserPoint userPoint = userPointRepositoryImpl.selectPoint(1);
+        assertThat(userPoint.point()).isEqualTo(500);                                       // 수식으로 검증해서 테스트 작성자의 오류도 줄인다.
     }
 }
