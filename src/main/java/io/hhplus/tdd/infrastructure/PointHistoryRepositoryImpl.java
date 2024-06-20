@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public class PointHistoryRepositoryImpl implements PointHistoryRepositroy {
     @Autowired
-    private PointHistoryTable pointHistoryTable;
+    PointHistoryTable pointHistoryTable;
 
     @Override
     public List<PointHistory> selectHistory(long userId) {

@@ -13,9 +13,9 @@ import java.util.List;
 @Service
 public class PointServiceImpl implements PointService {
     @Autowired
-    PointHistoryRepositoryImpl pointHistoryRepositoryImpl;
-    @Autowired
     UserPointRepositoryImpl userPointRepositoryImpl;
+    @Autowired
+    PointHistoryRepositoryImpl pointHistoryRepositoryImpl;
 
     /**
      * 특정 유저의 포인트를 조회
