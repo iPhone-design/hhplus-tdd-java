@@ -69,7 +69,7 @@ class PointServiceImplTest {
         UserPoint userPoint = userPointRepositoryImpl.updatePoint(id, amount + chargeAmount); // 포인트 충전
 
         // then
-        assertThat(userPoint.point()).isEqualTo(1500);                                       // 포인트 값 체크
+        assertThat(userPoint.point()).isEqualTo(amount + chargeAmount);                      // 포인트 값 체크
     }
 
     @Test
@@ -88,6 +88,6 @@ class PointServiceImplTest {
         UserPoint userPoint = userPointRepositoryImpl.updatePoint(id, amount - useAmount); // 포인트 사용
 
         // then
-        assertThat(userPoint.point()).isEqualTo(500);                                     // 포인트 값 체크
+        assertThat(userPoint.point()).isEqualTo(amount - useAmount);                      // 포인트 값 체크
     }
 }
