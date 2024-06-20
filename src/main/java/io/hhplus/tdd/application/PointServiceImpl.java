@@ -5,17 +5,19 @@ import io.hhplus.tdd.domain.entity.PointHistory;
 import io.hhplus.tdd.domain.entity.UserPoint;
 import io.hhplus.tdd.infrastructure.PointHistoryRepositoryImpl;
 import io.hhplus.tdd.infrastructure.UserPointRepositoryImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class PointServiceImpl implements PointService {
-    @Autowired
     UserPointRepositoryImpl userPointRepositoryImpl;
-    @Autowired
     PointHistoryRepositoryImpl pointHistoryRepositoryImpl;
+
+    public PointServiceImpl(UserPointRepositoryImpl userPointRepositoryImpl, PointHistoryRepositoryImpl pointHistoryRepositoryImpl) {
+        this.userPointRepositoryImpl = userPointRepositoryImpl;
+        this.pointHistoryRepositoryImpl = pointHistoryRepositoryImpl;
+    }
 
     /**
      * 특정 유저의 포인트를 조회
