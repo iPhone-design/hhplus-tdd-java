@@ -1,5 +1,7 @@
-package io.hhplus.tdd.point;
+package io.hhplus.tdd.controller;
 
+import io.hhplus.tdd.domain.entity.PointHistory;
+import io.hhplus.tdd.domain.entity.UserPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
