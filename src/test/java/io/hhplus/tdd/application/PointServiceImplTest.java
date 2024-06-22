@@ -33,10 +33,10 @@ class PointServiceImplTest {
         long id = 10L;                                                              // 유저 ID
 
         // when
-        UserPoint userPoint = userPointRepositoryImpl.selectPoint(id);              // 포인트 조회
+        UserPoint userPoint = userPointRepositoryImpl.selectPoint(id);              // 유저 포인트 조회 시
 
         // then
-        assertEquals(id, userPoint.id());                                           // 유저 ID 같음
+        assertThat(userPoint.id()).isEqualTo(10);                         // 유저 ID 같음
         assertThat(userPoint.point()).isEqualTo(0);                       // 유저 포인트 같음
     }
 
@@ -62,10 +62,6 @@ class PointServiceImplTest {
         long chargeAmount = 500L;                                                                       // 충전 포인트
 
         // when
-        if (chargeAmount < 0) {                                                                         // 예외 발생
-            throw new Exception("오류 발생");
-        }
-
         UserPoint userPoint = userPointRepositoryImpl.updatePoint(id, amount + chargeAmount); // 포인트 충전
 
         // then
